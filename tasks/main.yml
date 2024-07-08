@@ -1,12 +1,22 @@
 - name: Copy ssh
   copy:
-    src: config_opal
-    dest: /home/root/.ssh/
+    src: "{{ item }}"
+    dest: ~/.ssh/
     mode: '0600'
-
+  become: true
+  become_user: "{{ userConfigSsh | default('root') }}"
+  with_items:
+    - config_opal
+    - config_serveur
 
 - name: modify config ssh
   lineinfile:
     dest: ~/.ssh/config 
     state: present
-    regexp: Include ~/.ssh/config_opal
+    line: "Include ~/.ssh/{{ item }}"
+  become: true
+  become_user: "{{ userConfigSsh | default('root') }}"
+  with_items:
+    - config_opal
+    - config_serveur
+
