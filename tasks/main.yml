@@ -5,9 +5,7 @@
     mode: '0600'
   become: true
   become_user: "{{ userConfigSsh | default('root') }}"
-  with_items:
-    - config_opal
-    - config_serveur
+  with_items: "{{ config_list }}"
 
 - name: modify config ssh
   lineinfile:
@@ -16,7 +14,5 @@
     line: "Include ~/.ssh/{{ item }}"
   become: true
   become_user: "{{ userConfigSsh | default('root') }}"
-  with_items:
-    - config_opal
-    - config_serveur
+  with_items: "{{ config_list }}"
 
