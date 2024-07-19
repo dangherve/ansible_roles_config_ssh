@@ -1,18 +1,6 @@
-- name: Copy ssh
-  copy:
-    src: "{{ item }}"
-    dest: ~/.ssh/
-    mode: '0600'
-  become: true
-  become_user: "{{ userConfigSsh | default('root') }}"
-  with_items: "{{ config_list }}"
-
-- name: modify config ssh
-  lineinfile:
-    dest: ~/.ssh/config 
-    state: present
-    line: "Include ~/.ssh/{{ item }}"
-  become: true
-  become_user: "{{ userConfigSsh | default('root') }}"
-  with_items: "{{ config_list }}"
-
+# install for user
+- include_tasks: user.yml
+  with_items:
+    - "{{ userConfigSsh }}"
+  loop_control:
+    loop_var: user

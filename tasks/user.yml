@@ -1,0 +1,12 @@
+
+- name: Copy ssh config(s)
+  copy:
+    src: "config_ssh/{{ item }}"
+    dest: ~/.ssh/
+    mode: '0600'
+    force: false
+  become: true
+  become_user: "{{ user }}"
+  with_items: "{{ config_list }}"
+
+
