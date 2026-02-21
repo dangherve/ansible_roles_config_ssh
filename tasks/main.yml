@@ -3,4 +3,4 @@
   with_items:
     - "{{ userConfigSsh }}"
   loop_control:
-    loop_var: user
+    loop_var: userInfo

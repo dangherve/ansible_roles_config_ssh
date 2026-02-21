@@ -1,12 +1,25 @@
 
-- name: Copy ssh config(s)
+- name: "Copy ssh config(s) {{ userInfo.user }}"
   copy:
     src: "config_ssh/{{ item }}"
     dest: ~/.ssh/
     mode: '0600'
     force: false
   become: true
-  become_user: "{{ user }}"
-  with_items: "{{ config_list }}"
+  become_user: "{{ userInfo.user }}"
+  with_items: "{{ userInfo.list }}"
+
+
+
+
+- name: Copy ssh key
+  copy:
+    src: "ssh_key/{{ userInfo.key }}"
+    dest: ~/.ssh/
+    mode: '0600'
+    force: false
+  become: true
+  become_user: "{{ userInfo.user }}"
+  when: userInfo.key is defined
 
 
